@@ -1,36 +1,56 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from pathlib import Path
 import json
-import os
 
-app = FastAPI(title="Music Indexing API")
+ROOT = Path(__file__).resolve().parents[2]
+INDEX_PATH = ROOT / "data" / "metadata" / "index.json"
+
+app = FastAPI(title="Music Indexer API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For development; restrict in production
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_origins=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
-INDEX_PATH = "data/metadata/index.json"
-
 def load_index():
-    if os.path.exists(INDEX_PATH):
-        with open(INDEX_PATH, 'r') as f:
-            data = json.load(f)
-            return data.get("items", [])
-    return []
+    if not INDEX_PATH.exists():
+        raise FileNotFoundError("Index not found. Run scripts/build_index.py")
+    return json.loads(INDEX_PATH.read_text(encoding="utf-8"))
 
 @app.get("/api/index")
 def get_index():
-    return {"data": load_index()}
+    try:
+        return load_index()
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
 @app.get("/api/search")
-def search(q: str = Query(..., description="Search query")):
-    index = load_index()
-    results = [item for item in index if q.lower() in item['content'].lower() or q.lower() in item['title'].lower()]
-    return {"data": results}
+def search(q: str = Query(..., min_length=1), limit: int = 20):
+    idx = load_index()
+    results = []
+    ql = q.lower()
+    for item in idx.get("items", []):
+        if ql in item.get("title", "").lower() or ql in item.get("id", "").lower():
+            results.append(item)
+        else:
+            for s in item.get("sections", {}).values():
+                if ql in s.lower():
+                    results.append(item)
+                    break
+        if len(results) >= limit:
+            break
+    return {"query": q, "count": len(results), "results": results}
+
+@app.get("/api/item")
+def get_item(id: str):
+    idx = load_index()
+    for item in idx.get("items", []):
+        if item.get("id") == id or item.get("title") == id:
+            return item
+    raise HTTPException(status_code=404, detail="Item not found")
 
 if __name__ == "__main__":
     import uvicorn
