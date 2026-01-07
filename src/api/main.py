@@ -18,7 +18,13 @@ app.add_middleware(
 def load_index():
     if not INDEX_PATH.exists():
         raise FileNotFoundError("Index not found. Run scripts/build_index.py")
-    return json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+    # Read as bytes and try UTF-8, fall back to latin-1 if file contains non-UTF8 bytes.
+    raw = INDEX_PATH.read_bytes()
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        text = raw.decode("latin-1")
+    return json.loads(text)
 
 @app.get("/api/index")
 def get_index():
