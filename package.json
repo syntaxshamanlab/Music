@@ -1,0 +1,16 @@
+{
+  "name": "music-indexer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build-index": "python scripts/build_index.py",
+    "watch": "npx chokidar \"data/**/*\" -c \"npm run build-index\" --initial",
+    "start:api": "uvicorn src.api.main:app --host 127.0.0.1 --port 8000",
+    "start:frontend": "cd src/frontend && npm start",
+    "dev": "concurrently \"npm:watch\" \"npm:start:api\" \"npm:start:frontend\""
+  },
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.0.0"
+  }
+}

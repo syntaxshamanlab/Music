@@ -1,0 +1,19 @@
+{
+  "data_directories": {
+    "lyrics": "data/lyrics",
+    "documents": "data/documents"
+  },
+  "metadata_output": "data/metadata/index.json",
+  "parsing_rules": {
+    ".docx": {
+      "extract_title": true,
+      "extract_author": false,
+      "extract_content": true,
+      "extract_genre": false
+    }
+  },
+  "indexing_options": {
+    "include_timestamps": false,
+    "generate_summaries": false
+  }
+}

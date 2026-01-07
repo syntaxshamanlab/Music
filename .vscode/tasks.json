@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Index",
+      "type": "shell",
+      "command": "python scripts/build_index.py",
+      "group": "build",
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Start Watcher",
+      "type": "shell",
+      "command": "python scripts/watch_build.py",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Start API (local only)",
+      "type": "shell",
+      "command": "uvicorn src.api.main:app --host 127.0.0.1 --port 8000",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Frontend",
+      "type": "shell",
+      "command": "cd src/frontend && npm start",
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}
