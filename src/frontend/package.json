@@ -1,6 +1,7 @@
 {
   "name": "music-indexing-frontend",
   "version": "0.1.0",
+  "homepage": "https://syntaxshamanlab.github.io/Music",
   "private": true,
   "dependencies": {
     "react": "^18.2.0",
