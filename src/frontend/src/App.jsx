@@ -16,8 +16,13 @@ export default function App() {
       const errorData = await window.checkJSErrors();
       if (errorData && errorData.jsErrors.length > 0) {
         console.error("JavaScript errors detected:", errorData.jsErrors);
-        // Optionally send to backend for logging
-        // axios.post("http://localhost:8000/api/errors", errorData);
+        // Send to backend for logging
+        try {
+          await axios.post("http://localhost:8000/api/errors", errorData);
+          console.log("Errors sent to backend");
+        } catch (err) {
+          console.error("Failed to send errors to backend:", err);
+        }
       }
     })();
   }, []);

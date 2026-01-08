@@ -58,6 +58,12 @@ def get_item(id: str):
             return item
     raise HTTPException(status_code=404, detail="Item not found")
 
+@app.post("/api/errors")
+def log_errors(error_data: dict):
+    # Simple logging to console; in production, save to file or database
+    print("Received JavaScript errors:", json.dumps(error_data, indent=2))
+    return {"status": "logged"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
