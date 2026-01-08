@@ -32,8 +32,8 @@ export default function App() {
   return (
     <div style={{padding:20}}>
       <h1>Music Indexer</h1>
-      <p>Items indexed: <strong>{index.items.length}</strong></p>
-      <Charts items={index.items} />
+      <p>Items indexed: <strong>{index.items ? index.items.length : 0}</strong></p>
+      <Charts items={index.items || []} />
     </div>
   );
 }
