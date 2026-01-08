@@ -143,6 +143,17 @@ function Dashboard({ items, onCategoryFilter }) {
     return recommendations;
   };
 
+  if (!items || items.length === 0) {
+    return (
+      <div className="dashboard">
+        <div className="dashboard-header">
+          <h2>📊 Analytics Dashboard</h2>
+          <p>Loading data...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="dashboard">
       <div className="dashboard-header">

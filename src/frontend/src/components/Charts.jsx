@@ -26,6 +26,14 @@ export default function Charts({ items }) {
     ]
   };
 
+  if (labels.length === 0) {
+    return (
+      <div style={{maxWidth:800, padding:20, textAlign:'center'}}>
+        <p>No data to display</p>
+      </div>
+    );
+  }
+
   return (
     <div style={{maxWidth:800}}>
       <Bar data={data} />
