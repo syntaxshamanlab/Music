@@ -11,7 +11,11 @@ app = FastAPI(title="Music Indexer API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://accounts.google.com",
+        "http://localhost:3000",
+        "http://localhost:8000",
+    ],
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
