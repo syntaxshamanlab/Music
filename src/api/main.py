@@ -1,14 +1,22 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import json
+from starlette.middleware.base import BaseHTTPMiddleware
 
 ROOT = Path(__file__).resolve().parents[2]
 INDEX_PATH = ROOT / "data" / "metadata" / "index.json"
 ERRORS_PATH = ROOT / "data" / "errors.json"
 
+class CSPMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["Content-Security-Policy"] = "script-src 'self' https://accounts.google.com https://www.google.com https://www.gstatic.com; frame-src 'self' https://accounts.google.com;"
+        return response
+
 app = FastAPI(title="Music Indexer API")
 
+app.add_middleware(CSPMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
