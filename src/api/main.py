@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import json
 from starlette.middleware.base import BaseHTTPMiddleware
+from collections import defaultdict
+import time
 
 ROOT = Path(__file__).resolve().parents[2]
 INDEX_PATH = ROOT / "data" / "metadata" / "index.json"
