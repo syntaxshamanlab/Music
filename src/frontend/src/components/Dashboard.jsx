@@ -27,13 +27,13 @@ function Dashboard({ items, onCategoryFilter }) {
   const calculateAnalytics = () => {
     const totalItems = items.length;
     const avgContentLength = Math.round(
-      items.reduce((sum, item) => sum + item.content.length, 0) / totalItems
+      items.reduce((sum, item) => sum + (item.content ? item.content.length : 0), 0) / totalItems
     );
 
     // Top collaborators
     const collaboratorCount = {};
     items.forEach(item => {
-      if (item.collaborators) {
+      if (item.collaborators && Array.isArray(item.collaborators)) {
         item.collaborators.forEach(collab => {
           collaboratorCount[collab] = (collaboratorCount[collab] || 0) + 1;
         });
@@ -45,7 +45,9 @@ function Dashboard({ items, onCategoryFilter }) {
 
     // Content type breakdown
     const contentTypeBreakdown = items.reduce((acc, item) => {
-      acc[item.source] = (acc[item.source] || 0) + 1;
+      if (item.source) {
+        acc[item.source] = (acc[item.source] || 0) + 1;
+      }
       return acc;
     }, {});
 
@@ -53,14 +55,14 @@ function Dashboard({ items, onCategoryFilter }) {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     const recentAdditions = items
-      .filter(item => new Date(item.created_at) > sevenDaysAgo)
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .filter(item => item.created_at && new Date(item.created_at) > sevenDaysAgo)
+      .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
       .slice(0, 5);
 
     // Section stats
     const sectionStats = {};
     items.forEach(item => {
-      if (item.sections) {
+      if (item.sections && typeof item.sections === 'object') {
         Object.keys(item.sections).forEach(section => {
           sectionStats[section] = (sectionStats[section] || 0) + 1;
         });

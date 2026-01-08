@@ -1,0 +1,122 @@
+[
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 37076,
+        "colno": 18,
+        "error": {},
+        "timestamp": "2026-01-08T20:50:02.504Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 37076,
+        "colno": 18,
+        "error": {},
+        "timestamp": "2026-01-08T20:50:53.361Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 37076,
+        "colno": 18,
+        "error": {},
+        "timestamp": "2026-01-08T20:50:53.381Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 26582,
+        "colno": 9,
+        "error": {},
+        "timestamp": "2026-01-08T20:50:53.434Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 37076,
+        "colno": 18,
+        "error": {},
+        "timestamp": "2026-01-08T20:51:33.323Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 26582,
+        "colno": 9,
+        "error": {},
+        "timestamp": "2026-01-08T20:51:33.331Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 37076,
+        "colno": 18,
+        "error": {},
+        "timestamp": "2026-01-08T20:51:33.327Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 37076,
+        "colno": 18,
+        "error": {},
+        "timestamp": "2026-01-08T20:51:33.511Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 37076,
+        "colno": 18,
+        "error": {},
+        "timestamp": "2026-01-08T20:51:33.516Z"
+      }
+    ]
+  },
+  {
+    "jsErrors": [
+      {
+        "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'filter')",
+        "filename": "http://127.0.0.1:3000/Music/static/js/bundle.js",
+        "lineno": 26582,
+        "colno": 9,
+        "error": {},
+        "timestamp": "2026-01-08T20:51:33.521Z"
+      }
+    ]
+  }
+]
