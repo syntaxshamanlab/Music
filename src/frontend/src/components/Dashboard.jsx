@@ -9,12 +9,20 @@ function Dashboard({ items, onCategoryFilter }) {
     recentAdditions: [],
     sectionStats: {}
   });
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    if (items.length > 0) {
+    if (items && items.length > 0) {
       calculateAnalytics();
     }
   }, [items]);
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/errors')
+      .then(res => res.json())
+      .then(data => setErrors(data.errors || []))
+      .catch(err => console.error('Failed to fetch errors:', err));
+  }, []);
 
   const calculateAnalytics = () => {
     const totalItems = items.length;
@@ -213,6 +221,25 @@ function Dashboard({ items, onCategoryFilter }) {
           ))}
         </div>
       </div>
+
+      {errors.length > 0 && (
+        <div className="dashboard-section">
+          <h3>🐛 JavaScript Errors ({errors.length})</h3>
+          <div className="errors-list">
+            {errors.slice(-5).map((errorData, index) => (
+              <div key={index} className="error-item">
+                <div className="error-time">{new Date(errorData.jsErrors[0]?.timestamp || Date.now()).toLocaleString()}</div>
+                <div className="error-count">{errorData.jsErrors.length} errors</div>
+                {errorData.jsErrors.slice(0, 3).map((err, i) => (
+                  <div key={i} className="error-detail">
+                    {err.message}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {analytics.recommendations && analytics.recommendations.length > 0 && (
         <div className="dashboard-section">

@@ -5,6 +5,7 @@ import json
 
 ROOT = Path(__file__).resolve().parents[2]
 INDEX_PATH = ROOT / "data" / "metadata" / "index.json"
+ERRORS_PATH = ROOT / "data" / "errors.json"
 
 app = FastAPI(title="Music Indexer API")
 
@@ -60,9 +61,37 @@ def get_item(id: str):
 
 @app.post("/api/errors")
 def log_errors(error_data: dict):
-    # Simple logging to console; in production, save to file or database
-    print("Received JavaScript errors:", json.dumps(error_data, indent=2))
+    # Load existing errors
+    if ERRORS_PATH.exists():
+        with open(ERRORS_PATH, "r") as f:
+            try:
+                errors = json.load(f)
+            except json.JSONDecodeError:
+                errors = []
+    else:
+        errors = []
+    
+    # Append new error data
+    errors.append(error_data)
+    
+    # Save back to file
+    with open(ERRORS_PATH, "w") as f:
+        json.dump(errors, f, indent=2)
+    
+    print("Received and saved JavaScript errors:", json.dumps(error_data, indent=2))
     return {"status": "logged"}
+
+@app.get("/api/errors")
+def get_errors():
+    if ERRORS_PATH.exists():
+        with open(ERRORS_PATH, "r") as f:
+            try:
+                errors = json.load(f)
+            except json.JSONDecodeError:
+                errors = []
+    else:
+        errors = []
+    return {"errors": errors}
 
 if __name__ == "__main__":
     import uvicorn

@@ -5,6 +5,7 @@ Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function Charts({ items }) {
   const sagaCounts = useMemo(() => {
+    if (!items || !Array.isArray(items)) return {};
     const counts = {};
     items.forEach(it => {
       const saga = it.get?.("saga") || (it.sections && it.sections.body && it.sections.body.slice(0,50)) || "unknown";
