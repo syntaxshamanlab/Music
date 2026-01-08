@@ -11,6 +11,17 @@ export default function App() {
       .catch(err => console.error("API error", err));
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const errorData = await window.checkJSErrors();
+      if (errorData && errorData.jsErrors.length > 0) {
+        console.error("JavaScript errors detected:", errorData.jsErrors);
+        // Optionally send to backend for logging
+        // axios.post("http://localhost:8000/api/errors", errorData);
+      }
+    })();
+  }, []);
+
   if (!index) return <div style={{padding:20}}>Loading index...</div>;
 
   return (
