@@ -7,22 +7,36 @@ import App from './App';
 window.__jsErrors = [];
 
 window.addEventListener('error', (event) => {
-  window.__jsErrors.push({
+  const errorData = {
     message: event.message,
     filename: event.filename,
     lineno: event.lineno,
     colno: event.colno,
     error: event.error,
     timestamp: new Date().toISOString()
-  });
+  };
+  window.__jsErrors.push(errorData);
+  // Send immediately to backend
+  fetch('http://localhost:8000/api/errors', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ jsErrors: [errorData] })
+  }).catch(err => console.error('Failed to send error to backend:', err));
 });
 
 window.addEventListener('unhandledrejection', (event) => {
-  window.__jsErrors.push({
+  const errorData = {
     type: 'unhandledrejection',
     reason: event.reason,
     timestamp: new Date().toISOString()
-  });
+  };
+  window.__jsErrors.push(errorData);
+  // Send immediately to backend
+  fetch('http://localhost:8000/api/errors', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ jsErrors: [errorData] })
+  }).catch(err => console.error('Failed to send error to backend:', err));
 });
 
 // Error checking function

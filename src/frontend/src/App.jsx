@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Charts from "./components/Charts";
+import Dashboard from "./components/Dashboard";
 
 export default function App() {
   const [index, setIndex] = useState(null);
@@ -34,6 +35,10 @@ export default function App() {
       <h1>Music Indexer</h1>
       <p>Items indexed: <strong>{index.items ? index.items.length : 0}</strong></p>
       <Charts items={index.items || []} />
+      <Dashboard items={index.items || []} />
+      <button onClick={() => { throw new Error("Test error for monitoring"); }}>
+        Trigger Test Error
+      </button>
     </div>
   );
 }
